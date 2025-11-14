@@ -53,3 +53,4 @@ turtle.onkeypress(right, "Right")
 # Start the game
 drop_ball()
 turtle.mainloop()
+#pip install PythonTurtle
