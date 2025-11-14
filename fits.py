@@ -73,4 +73,13 @@ def display():
                 print("Not allocated")
 
 while True:
+
     ch=int(input("Enter choice:"))
+
+'''
+Number of blocks: 5
+Block sizes: 100 500 200 300 600
+Number of processes: 4
+Process sizes: 212 417 112 426
+
+'''
