@@ -14,3 +14,7 @@ class AddNumbers {
         System.out.println("Addition = " + result);
     }
 }
+
+// javac -h . AddNumbers.java
+// g++ -fPIC -I"$JAVA_HOME/include" -I"$JAVA_HOME/include/linux" -shared -o libAddLib.so AddLib.cpp
+// java -Djava.library.path=. AddNumbers
