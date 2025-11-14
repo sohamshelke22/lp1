@@ -1,3 +1,21 @@
+# FaceRecognition.py
+# ------------------
+# Requirements:
+#   - Python 3.8+
+#   - Install required library:
+#       pip install opencv-python
+#
+# Quick steps to run:
+#   1. (Optional) create & activate a virtual environment.
+#   2. Install dependency: pip install opencv-python
+#   3. Connect a webcam (or ensure your laptop camera is available).
+#   4. Run: python FaceRecognition.py
+#   5. Window shows live video; press 'q' to quit.
+#
+# Notes:
+#   - If your camera is not at index 0, change VideoCapture(0) to another index (1,2,...).
+#   - If the program crashes on reading frames, check camera permissions / device drivers.
+#   - This script uses OpenCV's Haar cascade bundled in the package.
 
 import cv2
 import sys
