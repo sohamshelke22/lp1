@@ -1,3 +1,14 @@
+# Requirements:
+# pip install opencv-python mediapipe
+#
+# How to run:
+# 1. Save this file as gesture.py
+# 2. Ensure your webcam is connected and not used by another app.
+# 3. Run: python gesture.py
+# 4. Press 'q' in the window to quit.
+#
+# (Only the necessary instructions above - no extra text inside the code.)
+
 import cv2
 import mediapipe as mp
 
