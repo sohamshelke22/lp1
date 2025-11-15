@@ -1,0 +1,88 @@
+"""https://www.python.org/downloads/release/python-3119/ 
+https://www.python.org/downloads/ 
+sudo apt update 
+sudo apt install python3.11 
+py -3.11 -m pip install opencv-python mediapipe pyautogui 
+py -3.11 7.py""" 
+
+import cv2 
+import mediapipe as mp 
+import pyautogui 
+
+
+mp_hands = mp.solutions.hands 
+hands = mp_hands.Hands(max_num_hands=1) 
+mp_draw = mp.solutions.drawing_utils 
+
+
+cap = cv2.VideoCapture(0) 
+
+
+screen_w, screen_h = pyautogui.size() 
+
+
+click_down = False 
+
+print("Gesture Control Started. Press 'q' to quit.") 
+
+
+while True: 
+    success, img = cap.read() 
+    if not success: 
+        break 
+
+
+    img = cv2.flip(img, 1) 
+    h, w, c = img.shape 
+
+
+    img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) 
+    results = hands.process(img_rgb) 
+
+
+    if results.multi_hand_landmarks: 
+        for hand_landmarks in results.multi_hand_landmarks: 
+            mp_draw.draw_landmarks(img, hand_landmarks, mp_hands.HAND_CONNECTIONS) 
+
+
+            lm_list = [] 
+            for id, lm in enumerate(hand_landmarks.landmark): 
+                lm_list.append(lm) 
+                cx, cy = int(lm.x * w), int(lm.y * h) 
+
+
+            index_x = int(lm_list[8].x * screen_w) 
+            index_y = int(lm_list[8].y * screen_h) 
+
+
+            thumb_x = int(lm_list[4].x * screen_w) 
+            thumb_y = int(lm_list[4].y * screen_h) 
+
+
+            pyautogui.moveTo(index_x, index_y) 
+
+
+            cv2.circle(img, (int(lm_list[8].x * w), int(lm_list[8].y * h)), 10, (255, 0, 0), -1) 
+            cv2.circle(img, (int(lm_list[4].x * w), int(lm_list[4].y * h)), 10, (0, 255, 0), -1) 
+
+
+            distance = abs(index_x - thumb_x) + abs(index_y - thumb_y) 
+
+
+            if distance < 60 and not click_down: 
+                click_down = True 
+                pyautogui.click() 
+                cv2.putText(img, "Click", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 255, 0), 3) 
+            elif distance >= 60: 
+                click_down = False 
+
+
+    cv2.imshow("Gesture Control", img) 
+
+
+    if cv2.waitKey(1) & 0xFF == ord('q'): 
+        break 
+
+cap.release() 
+cv2.destroyAllWindows() 
+print("Gesture Control Ended.") 
